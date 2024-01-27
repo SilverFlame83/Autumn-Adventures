@@ -9,8 +9,7 @@ function solve() {
   const addBtn = document.getElementById("add-btn");
   const upcomingList = document.getElementById("upcoming-list");
   const checkList = document.getElementById("check-list");
-  const secondfield = document.getElementById("second-field");
-  const thirdfield = document.getElementById("third-field");
+  const finishedUl = document.getElementById("finished-list");
   const clearBtn = document.getElementById("clear");
 
   addBtn.addEventListener("click", onAdd);
@@ -44,7 +43,7 @@ function solve() {
     append(checkListEventContent, checkListArticle, editBtn, continueBtn);
     append(checkList, checkListEventContent);
 
-   let editTime = timeInput.value;
+    let editTime = timeInput.value;
     let editdate = dateInput.value;
     let editPlace = placeInput.value;
     let editEvent = eventInput.value;
@@ -52,36 +51,55 @@ function solve() {
 
     timeInput.value = "";
     dateInput.value = "";
-    placeInput.value ="";
+    placeInput.value = "";
     eventInput.value = "";
     emailInput.value = "";
 
     addBtn.disabled = true;
 
-    editBtn.addEventListener('click', onEdit);
+    editBtn.addEventListener("click", onEdit);
 
-    function onEdit(){
-        timeInput.value = editTime;
-        dateInput.value = editdate;
-        placeInput.value = editPlace;
-        eventInput.value = editEvent;
-        emailInput.value = editEmail;
+    function onEdit() {
+      timeInput.value = editTime;
+      dateInput.value = editdate;
+      placeInput.value = editPlace;
+      eventInput.value = editEvent;
+      emailInput.value = editEmail;
 
-        checkListEventContent.remove();
-        addBtn.disabled = false;
+      checkListEventContent.remove();
+      addBtn.disabled = false;
     }
 
     continueBtn.addEventListener("click", onContinue);
-    
-    function onContinue(){
-        const upcomingEvent = elManager('li', null, 'event-content');
-        const articleContinue = elManager('article');
-        articleContinue = checkListArticle;
-        let finishedBtn = elManager("button", "Move to Finished", "finished-btn");
 
-        append(upcomingEvent,articleContinue,finishedBtn);
-        
+    function onContinue() {
+      let upcomingEvent = elManager("li", null, "event-content");
+      let articleContinue = elManager("article");
+      articleContinue = checkListArticle;
+      let finishedBtn = elManager("button", "Move to Finished", "finished-btn");
 
+      append(upcomingEvent, articleContinue, finishedBtn);
+      upcomingList.appendChild(upcomingEvent);
+      checkListEventContent.remove();
+
+      finishedBtn.addEventListener("click", onfinish);
+
+      function onfinish() {
+        let finishList = elManager("li", null, "event-content");
+        let finishArticle = elManager("article");
+        finishArticle = articleContinue;
+
+        append(finishList, finishArticle);
+        finishedUl.append(finishList);
+
+        upcomingEvent.remove();
+
+        clearBtn.addEventListener("click", onClear);
+
+        function onClear() {
+          finishList.remove();
+        }
+      }
     }
 
     function elManager(type, txtContent, className) {
