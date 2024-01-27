@@ -27,12 +27,23 @@ function solve() {
       return;
     }
 
-    console.log(
-      timeInput.value,
-      dateInput.value,
-      placeInput.value,
-      eventInput.value,
-      emailInput.value
-    );
+    function elManager(type, txtContent, className) {
+      const el = document.createElement(type);
+      if (txtContent) {
+        el.textContent = txtContent;
+      }
+      if (className) {
+        el.className = className;
+      }
+
+      return el;
+    }
+
+    function append(main, ...arg) {
+      while (arg.length) {
+        main.appendChild(arg.shift());
+      }
+      return main;
+    }
   }
 }
