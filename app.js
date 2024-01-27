@@ -71,6 +71,18 @@ function solve() {
         addBtn.disabled = false;
     }
 
+    continueBtn.addEventListener("click", onContinue);
+    
+    function onContinue(){
+        const upcomingEvent = elManager('li', null, 'event-content');
+        const articleContinue = elManager('article');
+        articleContinue = checkListArticle;
+        let finishedBtn = elManager("button", "Move to Finished", "finished-btn");
+
+        append(upcomingEvent,articleContinue,finishedBtn);
+        
+
+    }
 
     function elManager(type, txtContent, className) {
       const el = document.createElement(type);
